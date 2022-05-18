@@ -1,0 +1,43 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+public class lab8 {
+    String[] Heap;
+    private int size;
+    private int maxsize;
+    void swap(int f, int s) {
+        String t;
+        t = Heap[f];
+        Heap[f] = Heap[s];
+        Heap[s] = t;
+    }
+    lab8(int maxsize) {
+        this.maxsize = maxsize;
+        this.size = 0;
+        Heap = new String[this.maxsize + 1];
+        Heap[0] ="";
+    }
+    int parent(int p) {return p / 2;}
+    void add(String element) {
+        if (size >= maxsize) {return;}
+        Heap[++size] = element;
+        int current = size;
+        while (Heap[current].compareTo(Heap[parent(current)]) < 0) {
+            swap(current, parent(current));
+            current = parent(current);
+        }
+    }
+    public void print() {
+        for (int i = 1; i < size; ++i)
+            System.out.print(Heap[i] + " ");
+        System.out.println();
+    }
+    public static void main(String[] args) throws FileNotFoundException {
+        
+        System.out.print("Min heap:");
+        while(s.hasNextLine()){
+            Heap.add(s.nextLine());
+            Heap.print();
+        }
+    }
+}
