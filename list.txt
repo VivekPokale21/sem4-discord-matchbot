@@ -1,0 +1,122 @@
+class Fac
+{
+  String fid, fname;
+  int numapp, numphd;
+    Fac (String id, String n, int app, int phd)
+  {
+    fid = id;
+    fname = n;
+    numapp = app;
+    numphd = phd;
+  }
+}
+class lab3
+{
+  private Node head;
+  private Node tail;
+  private int size;
+  public lab3 ()
+  {
+    size = 0;
+  }
+  private class Node
+  {
+    Fac element;
+    Node next;
+    Node prev;
+    public Node (Fac element, Node next, Node prev)
+    {
+      this.element = element;
+      this.next = next;
+      this.prev = prev;
+    }
+  }
+  public void append (Fac element)
+  {
+    Node tmp = new Node (element, null, tail);
+    if (tail != null)
+      {
+        tail.next = tmp;
+      }
+    tail = tmp;
+    if (head == null)
+      {
+        head = tmp;
+      }
+    size++;
+  }
+  public void fwd ()
+  {
+    System.out.println ("in fwd directon:");
+    Node tmp = head;
+    while (tmp != null)
+      {
+        System.out.println (tmp.element.fid + "\t" + tmp.element.fname +
+                            "\t" + tmp.element.numapp + "\t" +
+                            tmp.element.numphd);
+        tmp = tmp.next;
+      }
+  }
+  public void bkw ()
+  {
+    System.out.println ("in reverse direction:");
+    Node tmp = tail;
+    while (tmp != null)
+      {
+        System.out.println (tmp.element.fid + "\t" + tmp.element.fname +
+                            "\t" + tmp.element.numapp + "\t" +
+                            tmp.element.numphd);
+        tmp = tmp.prev;
+      }
+  }
+  Node delete (Node del)
+  {
+    if (head == null || del == null)
+      return null;
+    if (head == del)
+      head = del.next;
+    if (del.next != null)
+      del.next.prev = del.prev;
+    if (del.prev != null)
+      del.prev.next = del.next;
+    del = null;
+    return head;
+  }
+  void delNode (int n)
+  {
+    if (head == null || n <= 0)
+      return;
+    Node current = head;
+    for (int i = 1; current != null && i < n; i++)
+      {
+        current = current.next;
+      }
+    if (current == null)
+      return;
+    delete (current);
+  }
+}
+class Lab3
+{
+  public static void main (String args[]) throws FileNotFoundException
+  {
+    lab3 dll = new lab3 (); int n=0;
+    System.out.println("Vivek Pokale 2020A7PS0158U");
+    Scanner r = new Scanner (new File ("facin.dat"));
+    Scanner ip = new Scanner(System.in);
+    while (r.hasNextLine ())
+      {
+        StringTokenizer s = new StringTokenizer (r.nextLine (), " ");
+        while (s.hasMoreTokens ())
+          {
+            dll.append (new Fac (s.nextToken (), s.nextToken (),
+                           Integer.parseInt (s.nextToken ()),
+                           Integer.parseInt (s.nextToken ())));
+          }
+      }
+    dll.fwd ();
+    System.out.println("Enter position of element to be removed");n=ip.nextInt();
+    dll.delNode (n);
+    dll.bkw ();
+  }
+}
